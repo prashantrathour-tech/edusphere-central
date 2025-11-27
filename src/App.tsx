@@ -12,6 +12,8 @@ import SystemOwner from "./pages/dashboards/SystemOwner";
 import OrgAdmin from "./pages/dashboards/OrgAdmin";
 import Teacher from "./pages/dashboards/Teacher";
 import Student from "./pages/dashboards/Student";
+import Parent from "./pages/dashboards/Parent";
+import ClassManagement from "./pages/teacher/ClassManagement";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -44,10 +46,18 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/teacher/*"
+        path="/teacher"
         element={
           <ProtectedRoute allowedRoles={['teacher', 'class_teacher']}>
             <Teacher />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/teacher/classes"
+        element={
+          <ProtectedRoute allowedRoles={['teacher', 'class_teacher']}>
+            <ClassManagement />
           </ProtectedRoute>
         }
       />
@@ -56,6 +66,14 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={['student']}>
             <Student />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/parent/*"
+        element={
+          <ProtectedRoute allowedRoles={['parent']}>
+            <Parent />
           </ProtectedRoute>
         }
       />
