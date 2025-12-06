@@ -14,6 +14,8 @@ import Teacher from "./pages/dashboards/Teacher";
 import Student from "./pages/dashboards/Student";
 import Parent from "./pages/dashboards/Parent";
 import ClassManagement from "./pages/teacher/ClassManagement";
+import TeacherAnalytics from "./pages/teacher/Analytics";
+import AdminAnalytics from "./pages/admin/Analytics";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -58,6 +60,22 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={['teacher', 'class_teacher']}>
             <ClassManagement />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/teacher/analytics"
+        element={
+          <ProtectedRoute allowedRoles={['teacher', 'class_teacher']}>
+            <TeacherAnalytics />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/org-admin/analytics"
+        element={
+          <ProtectedRoute allowedRoles={['org_admin']}>
+            <AdminAnalytics />
           </ProtectedRoute>
         }
       />
