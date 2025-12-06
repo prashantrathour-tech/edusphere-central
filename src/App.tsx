@@ -16,6 +16,8 @@ import Parent from "./pages/dashboards/Parent";
 import ClassManagement from "./pages/teacher/ClassManagement";
 import TeacherAnalytics from "./pages/teacher/Analytics";
 import AdminAnalytics from "./pages/admin/Analytics";
+import StudentAnalytics from "./pages/student/Analytics";
+import StudentCalendar from "./pages/student/Calendar";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -80,10 +82,26 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/student/*"
+        path="/student"
         element={
           <ProtectedRoute allowedRoles={['student']}>
             <Student />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/student/analytics"
+        element={
+          <ProtectedRoute allowedRoles={['student']}>
+            <StudentAnalytics />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/student/calendar"
+        element={
+          <ProtectedRoute allowedRoles={['student']}>
+            <StudentCalendar />
           </ProtectedRoute>
         }
       />
