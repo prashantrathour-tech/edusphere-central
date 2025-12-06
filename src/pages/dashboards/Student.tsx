@@ -19,8 +19,9 @@ const Student = () => {
     { label: 'My Classes', icon: <BookOpen className="h-5 w-5" />, path: '/student/classes' },
     { label: 'Assignments', icon: <ClipboardList className="h-5 w-5" />, path: '/student/assignments' },
     { label: 'Grades', icon: <Award className="h-5 w-5" />, path: '/student/grades' },
+    { label: 'Analytics', icon: <BarChart3 className="h-5 w-5" />, path: '/student/analytics' },
     { label: 'Attendance', icon: <CheckCircle className="h-5 w-5" />, path: '/student/attendance' },
-    { label: 'Schedule', icon: <Calendar className="h-5 w-5" />, path: '/student/schedule' },
+    { label: 'Calendar', icon: <Calendar className="h-5 w-5" />, path: '/student/calendar' },
   ];
 
   const stats = [
