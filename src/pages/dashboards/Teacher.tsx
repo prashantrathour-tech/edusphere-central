@@ -23,6 +23,7 @@ const Teacher = () => {
     { label: 'Students', icon: <Users className="h-5 w-5" />, path: '/teacher/students' },
     { label: 'Assignments', icon: <ClipboardList className="h-5 w-5" />, path: '/teacher/assignments' },
     { label: 'Attendance', icon: <CheckCircle className="h-5 w-5" />, path: '/teacher/attendance' },
+    { label: 'Analytics', icon: <BarChart3 className="h-5 w-5" />, path: '/teacher/analytics' },
     { label: 'Schedule', icon: <Calendar className="h-5 w-5" />, path: '/teacher/schedule' },
   ];
 

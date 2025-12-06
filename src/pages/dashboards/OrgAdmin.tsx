@@ -18,6 +18,7 @@ const OrgAdmin = () => {
     { label: 'Users', icon: <Users className="h-5 w-5" />, path: '/org-admin/users' },
     { label: 'Classes', icon: <BookOpen className="h-5 w-5" />, path: '/org-admin/classes' },
     { label: 'Academic', icon: <GraduationCap className="h-5 w-5" />, path: '/org-admin/academic' },
+    { label: 'Analytics', icon: <BarChart3 className="h-5 w-5" />, path: '/org-admin/analytics' },
     { label: 'Reports', icon: <FileText className="h-5 w-5" />, path: '/org-admin/reports' },
     { label: 'Settings', icon: <Settings className="h-5 w-5" />, path: '/org-admin/settings' },
   ];
