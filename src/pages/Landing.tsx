@@ -71,7 +71,7 @@ const Landing = () => {
             <GraduationCap className="h-7 w-7 text-primary" />
             <span className="text-xl font-bold">EduFlow</span>
           </div>
-          <Button onClick={() => navigate('/login')}>
+          <Button onClick={() => navigate('/auth')}>
             Sign In
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
@@ -94,7 +94,7 @@ const Landing = () => {
             coaching centers, and training institutes. Built with modern technology stack.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Button size="lg" onClick={() => navigate('/login')} className="gap-2">
+            <Button size="lg" onClick={() => navigate('/auth')} className="gap-2">
               Get Started
               <ArrowRight className="h-5 w-5" />
             </Button>
@@ -161,7 +161,7 @@ const Landing = () => {
               Join thousands of educational institutions using EduFlow to manage 
               their academic operations efficiently.
             </p>
-            <Button size="lg" onClick={() => navigate('/login')} className="gap-2">
+            <Button size="lg" onClick={() => navigate('/auth')} className="gap-2">
               Start Your Journey
               <ArrowRight className="h-5 w-5" />
             </Button>

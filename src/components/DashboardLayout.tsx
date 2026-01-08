@@ -1,7 +1,6 @@
 import { ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { logout } from '@/store/slices/authSlice';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -29,14 +28,12 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ children, navItems }: DashboardLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const user = useAppSelector((state) => state.auth.user);
-  const organization = useAppSelector((state) => state.organization.current);
+  const { profile, signOut } = useAuth();
 
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/login');
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/auth');
   };
 
   const getInitials = (name: string) => {
@@ -67,12 +64,6 @@ const DashboardLayout = ({ children, navItems }: DashboardLayoutProps) => {
             <span className="font-semibold text-lg">EduFlow</span>
           </div>
 
-          {organization && (
-            <div className="hidden md:flex items-center gap-2 ml-4 px-4 py-1 rounded-md bg-accent/50">
-              <span className="text-sm text-muted-foreground">{organization.name}</span>
-            </div>
-          )}
-
           <div className="ml-auto flex items-center gap-2">
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5" />
@@ -83,19 +74,19 @@ const DashboardLayout = ({ children, navItems }: DashboardLayoutProps) => {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="gap-2">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.avatar} />
+                    <AvatarImage src={profile?.avatar_url || undefined} />
                     <AvatarFallback className="bg-primary text-primary-foreground">
-                      {user ? getInitials(user.name) : 'U'}
+                      {profile ? getInitials(profile.full_name) : 'U'}
                     </AvatarFallback>
                   </Avatar>
-                  <span className="hidden md:inline-block">{user?.name}</span>
+                  <span className="hidden md:inline-block">{profile?.full_name}</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuLabel>
                   <div className="flex flex-col gap-1">
-                    <p className="text-sm font-medium">{user?.name}</p>
-                    <p className="text-xs text-muted-foreground">{user?.email}</p>
+                    <p className="text-sm font-medium">{profile?.full_name}</p>
+                    <p className="text-xs text-muted-foreground">{profile?.email}</p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
