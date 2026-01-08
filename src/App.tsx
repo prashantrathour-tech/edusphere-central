@@ -1,13 +1,11 @@
-import { Provider } from 'react-redux';
-import { store } from '@/store/store';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useAppSelector } from '@/store/hooks';
+import { AuthProvider, useAuth } from '@/hooks/useAuth';
 import Landing from "./pages/Landing";
-import Login from "./pages/Login";
+import Auth from "./pages/Auth";
 import SystemOwner from "./pages/dashboards/SystemOwner";
 import OrgAdmin from "./pages/dashboards/OrgAdmin";
 import Teacher from "./pages/dashboards/Teacher";
@@ -20,97 +18,98 @@ import StudentAnalytics from "./pages/student/Analytics";
 import StudentCalendar from "./pages/student/Calendar";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
-import ProtectedRoute from "./components/ProtectedRoute";
+import AuthProtectedRoute from "./components/AuthProtectedRoute";
 
 const queryClient = new QueryClient();
 
 const AppRoutes = () => {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { user } = useAuth();
 
   return (
     <Routes>
-      <Route path="/" element={isAuthenticated ? <Navigate to="/login" /> : <Landing />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={user ? <Navigate to="/auth" /> : <Landing />} />
+      <Route path="/auth" element={<Auth />} />
+      <Route path="/login" element={<Navigate to="/auth" replace />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
       
       <Route
         path="/system-owner/*"
         element={
-          <ProtectedRoute allowedRoles={['system_owner']}>
+          <AuthProtectedRoute allowedRoles={['system_owner']}>
             <SystemOwner />
-          </ProtectedRoute>
+          </AuthProtectedRoute>
         }
       />
       <Route
         path="/org-admin/*"
         element={
-          <ProtectedRoute allowedRoles={['org_admin']}>
+          <AuthProtectedRoute allowedRoles={['org_admin']}>
             <OrgAdmin />
-          </ProtectedRoute>
+          </AuthProtectedRoute>
         }
       />
       <Route
         path="/teacher"
         element={
-          <ProtectedRoute allowedRoles={['teacher', 'class_teacher']}>
+          <AuthProtectedRoute allowedRoles={['teacher', 'class_teacher']}>
             <Teacher />
-          </ProtectedRoute>
+          </AuthProtectedRoute>
         }
       />
       <Route
         path="/teacher/classes"
         element={
-          <ProtectedRoute allowedRoles={['teacher', 'class_teacher']}>
+          <AuthProtectedRoute allowedRoles={['teacher', 'class_teacher']}>
             <ClassManagement />
-          </ProtectedRoute>
+          </AuthProtectedRoute>
         }
       />
       <Route
         path="/teacher/analytics"
         element={
-          <ProtectedRoute allowedRoles={['teacher', 'class_teacher']}>
+          <AuthProtectedRoute allowedRoles={['teacher', 'class_teacher']}>
             <TeacherAnalytics />
-          </ProtectedRoute>
+          </AuthProtectedRoute>
         }
       />
       <Route
         path="/org-admin/analytics"
         element={
-          <ProtectedRoute allowedRoles={['org_admin']}>
+          <AuthProtectedRoute allowedRoles={['org_admin']}>
             <AdminAnalytics />
-          </ProtectedRoute>
+          </AuthProtectedRoute>
         }
       />
       <Route
         path="/student"
         element={
-          <ProtectedRoute allowedRoles={['student']}>
+          <AuthProtectedRoute allowedRoles={['student']}>
             <Student />
-          </ProtectedRoute>
+          </AuthProtectedRoute>
         }
       />
       <Route
         path="/student/analytics"
         element={
-          <ProtectedRoute allowedRoles={['student']}>
+          <AuthProtectedRoute allowedRoles={['student']}>
             <StudentAnalytics />
-          </ProtectedRoute>
+          </AuthProtectedRoute>
         }
       />
       <Route
         path="/student/calendar"
         element={
-          <ProtectedRoute allowedRoles={['student']}>
+          <AuthProtectedRoute allowedRoles={['student']}>
             <StudentCalendar />
-          </ProtectedRoute>
+          </AuthProtectedRoute>
         }
       />
       <Route
         path="/parent/*"
         element={
-          <ProtectedRoute allowedRoles={['parent']}>
+          <AuthProtectedRoute allowedRoles={['parent']}>
             <Parent />
-          </ProtectedRoute>
+          </AuthProtectedRoute>
         }
       />
       
@@ -120,8 +119,8 @@ const AppRoutes = () => {
 };
 
 const App = () => (
-  <Provider store={store}>
-    <QueryClientProvider client={queryClient}>
+  <QueryClientProvider client={queryClient}>
+    <AuthProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -129,8 +128,8 @@ const App = () => (
           <AppRoutes />
         </BrowserRouter>
       </TooltipProvider>
-    </QueryClientProvider>
-  </Provider>
+    </AuthProvider>
+  </QueryClientProvider>
 );
 
 export default App;
